@@ -180,7 +180,10 @@ Open your browser at `http://localhost:8501`
 
 ## 📸 Screenshots
 
-> Add screenshots of your project here after taking them
+<img width="972" height="875" alt="image" src="https://github.com/user-attachments/assets/8ad91710-2ec4-4f7a-a9dd-f72c808fddfa" />
+<img width="1911" height="919" alt="image" src="https://github.com/user-attachments/assets/02a2dea2-421e-4112-89b3-be5a0ec19463" />
+
+
 
 ---
 

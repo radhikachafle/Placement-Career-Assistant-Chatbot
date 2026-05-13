@@ -1,0 +1,54 @@
+{
+  "intents": [
+    {
+      "tag": "greeting",
+      "patterns": ["hi", "hello", "hey", "good morning", "good evening", "what's up"],
+      "responses": ["Hello! I am your Placement Assistant. How can I help you today?"]
+    },
+    {
+      "tag": "goodbye",
+      "patterns": ["bye", "goodbye", "see you", "thanks bye", "take care"],
+      "responses": ["Good luck with your placement! Goodbye!"]
+    },
+    {
+      "tag": "resume_help",
+      "patterns": ["help me with my resume", "how to write a resume", "resume tips", "CV format", "how to make a good CV", "resume for campus placement"],
+      "responses": ["I can help you build a strong resume for placements!"]
+    },
+    {
+      "tag": "interview_prep",
+      "patterns": ["how to prepare for interview", "interview tips", "common interview questions", "HR round tips", "technical interview preparation", "how to crack interview"],
+      "responses": ["Let me help you prepare for your interview!"]
+    },
+    {
+      "tag": "aptitude_help",
+      "patterns": ["aptitude preparation", "how to crack aptitude test", "quantitative aptitude tips", "logical reasoning help", "online test preparation", "aptitude for placement"],
+      "responses": ["Aptitude is the first filter in most placements. Let me help!"]
+    },
+    {
+      "tag": "salary_negotiation",
+      "patterns": ["how to negotiate salary", "expected CTC", "salary tips", "how much salary to ask", "what is good salary for fresher", "package negotiation"],
+      "responses": ["Salary negotiation is a key skill. Let me guide you."]
+    },
+    {
+      "tag": "company_info",
+      "patterns": ["tell me about TCS", "Infosys interview process", "what is Wipro", "Accenture placement process", "top companies for freshers", "Cognizant hiring process"],
+      "responses": ["Here is what I know about top placement companies."]
+    },
+    {
+      "tag": "placement_process",
+      "patterns": ["what is placement process", "how does campus placement work", "placement rounds", "stages in placement", "what happens during placement drive"],
+      "responses": ["Campus placements typically go through multiple rounds."]
+    },
+    {
+      "tag": "coding_prep",
+      "patterns": ["how to prepare for coding round", "which data structures to study", "coding interview tips", "best platform to practice coding", "DSA preparation for placement"],
+      "responses": ["Coding rounds are critical. Here is how to prepare!"]
+    },
+    {
+      "tag": "higher_studies",
+      "patterns": ["should I go for higher studies", "MBA or job", "GATE preparation", "MS abroad vs job", "is MTech worth it", "placement vs higher education"],
+      "responses": ["Let me help you compare placement vs higher studies."]
+    }
+  ]
+}

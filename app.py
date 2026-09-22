@@ -62,25 +62,12 @@ graph TD
 """
 }
 
-
-def detect_roadmap(text):
-    text_lower = text.lower()
-    if any(k in text_lower for k in ["ai engineer", "artificial intelligence", "machine learning engineer"]):
-        return "ai engineer"
-    elif any(k in text_lower for k in ["data science", "data scientist"]):
-        return "data science"
-    elif any(k in text_lower for k in ["placement", "campus placement"]):
-        return "placement"
-    return None
-
-
 WELCOME_HTML = """
 <!DOCTYPE html>
 <html>
 <head>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
-
 body {
     background: #0a0f1e;
     min-height: 100vh;
@@ -90,18 +77,15 @@ body {
     overflow: hidden;
     font-family: 'Inter', sans-serif;
 }
-
 .scene {
     position: relative;
     width: 100%;
-    height: 520px;
+    height: 580px;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
 }
-
-/* ── Animated background blobs ── */
 .blob {
     position: absolute;
     border-radius: 50%;
@@ -133,8 +117,6 @@ body {
     33%       { transform: translate(30px, -30px) scale(1.1); }
     66%       { transform: translate(-20px, 20px) scale(0.9); }
 }
-
-/* ── Floating particles ── */
 .particles {
     position: absolute;
     width: 100%; height: 100%;
@@ -154,8 +136,6 @@ body {
     90%  { opacity: 0.4; }
     100% { opacity: 0; transform: translateY(-100vh) scale(1.5); }
 }
-
-/* ── 3D rotating ring ── */
 .ring-container {
     position: absolute;
     width: 300px; height: 300px;
@@ -194,8 +174,6 @@ body {
     0%   { transform: rotateX(65deg) rotateZ(0deg); }
     100% { transform: rotateX(65deg) rotateZ(360deg); }
 }
-
-/* ── Liquid glass card ── */
 .glass-card {
     position: relative;
     z-index: 10;
@@ -204,7 +182,7 @@ body {
     -webkit-backdrop-filter: blur(20px) saturate(180%);
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 28px;
-    padding: 48px 44px;
+    padding: 36px 44px;
     text-align: center;
     max-width: 480px;
     width: 90%;
@@ -220,34 +198,21 @@ body {
     0%   { opacity: 0; transform: scale(0.7) translateY(40px) rotateX(20deg); }
     100% { opacity: 1; transform: scale(1) translateY(0) rotateX(0deg); }
 }
-
-/* ── Glass highlight effect ── */
 .glass-card::before {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0;
     height: 50%;
-    background: linear-gradient(
-        180deg,
-        rgba(255,255,255,0.12) 0%,
-        rgba(255,255,255,0.02) 100%
-    );
+    background: linear-gradient(180deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.02) 100%);
     border-radius: 28px 28px 0 0;
     pointer-events: none;
 }
-
-/* ── Liquid shimmer on card ── */
 .glass-card::after {
     content: '';
     position: absolute;
     top: -50%; left: -50%;
     width: 200%; height: 200%;
-    background: linear-gradient(
-        45deg,
-        transparent 30%,
-        rgba(255,255,255,0.05) 50%,
-        transparent 70%
-    );
+    background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.05) 50%, transparent 70%);
     animation: shimmer 4s ease-in-out infinite;
     pointer-events: none;
     border-radius: 28px;
@@ -256,48 +221,38 @@ body {
     0%   { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
     100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
 }
-
-/* ── Emoji bounce ── */
-.card-emoji {
-    font-size: 56px;
-    display: block;
-    margin-bottom: 16px;
-    animation: emojiBounce 2s ease-in-out infinite;
-    filter: drop-shadow(0 0 20px rgba(0,200,150,0.6));
+.lottie-container {
+    width: 140px;
+    height: 140px;
+    margin: 0 auto 12px;
+    filter: drop-shadow(0 0 20px rgba(0,200,150,0.5));
+    animation: lottieFloat 3s ease-in-out infinite;
 }
-@keyframes emojiBounce {
-    0%, 100% { transform: translateY(0) scale(1); }
-    50%       { transform: translateY(-10px) scale(1.1); }
+@keyframes lottieFloat {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-8px); }
 }
-
-/* ── Title ── */
 .card-title {
-    color: white;
     font-size: 2rem;
     font-weight: 800;
-    margin-bottom: 10px;
-    text-shadow: 0 0 30px rgba(0,200,150,0.5);
+    margin-bottom: 8px;
     background: linear-gradient(135deg, #ffffff, #00c896);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
-
-/* ── Subtitle ── */
 .card-subtitle {
     color: rgba(255,255,255,0.7);
-    font-size: 0.95rem;
+    font-size: 0.92rem;
     line-height: 1.6;
-    margin-bottom: 28px;
+    margin-bottom: 20px;
 }
-
-/* ── Feature pills ── */
 .feature-pills {
     display: flex;
     justify-content: center;
     gap: 8px;
     flex-wrap: wrap;
-    margin-bottom: 24px;
+    margin-bottom: 16px;
 }
 .pill {
     background: rgba(0,200,150,0.15);
@@ -317,25 +272,21 @@ body {
     0%   { opacity: 0; transform: scale(0); }
     100% { opacity: 1; transform: scale(1); }
 }
-
-/* ── Divider line ── */
 .glass-divider {
     width: 60px;
     height: 2px;
     background: linear-gradient(90deg, transparent, #00c896, transparent);
-    margin: 0 auto 20px;
+    margin: 0 auto 16px;
     animation: dividerGlow 2s ease-in-out infinite;
 }
 @keyframes dividerGlow {
     0%, 100% { opacity: 0.5; width: 60px; }
     50%       { opacity: 1; width: 100px; }
 }
-
-/* ── Typing indicator ── */
 .typing-hint {
     color: rgba(255,255,255,0.4);
     font-size: 11px;
-    margin-top: 12px;
+    margin-top: 8px;
     animation: fadeInUp 0.5s ease 1.6s both;
 }
 @keyframes fadeInUp {
@@ -343,28 +294,30 @@ body {
     to   { opacity: 1; transform: translateY(0); }
 }
 </style>
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 </head>
 <body>
 <div class="scene">
-
-    <!-- Background blobs -->
     <div class="blob blob1"></div>
     <div class="blob blob2"></div>
     <div class="blob blob3"></div>
-
-    <!-- Floating particles -->
     <div class="particles" id="particles"></div>
-
-    <!-- 3D rotating rings -->
     <div class="ring-container">
         <div class="ring ring1"></div>
         <div class="ring ring2"></div>
         <div class="ring ring3"></div>
     </div>
-
-    <!-- Liquid glass card -->
     <div class="glass-card">
-        <span class="card-emoji">🏹</span>
+        <div class="lottie-container">
+            <lottie-player
+                src="https://lottie.host/67da4dec-36fe-43b3-b50c-c4655b9e864b/c0JQYjkGgB.json"
+                background="transparent"
+                speed="1"
+                loop
+                autoplay
+                style="width:140px; height:140px;">
+            </lottie-player>
+        </div>
         <div class="card-title">Placement Assistant</div>
         <div class="card-subtitle">
             Your AI-powered career guide.<br>
@@ -379,11 +332,8 @@ body {
         </div>
         <div class="typing-hint">↓ Enter your name below to get started ↓</div>
     </div>
-
 </div>
-
 <script>
-// Generate floating particles
 const container = document.getElementById('particles');
 for (let i = 0; i < 30; i++) {
     const p = document.createElement('div');
@@ -396,8 +346,6 @@ for (let i = 0; i < 30; i++) {
     p.style.background = colors[Math.floor(Math.random() * colors.length)];
     container.appendChild(p);
 }
-
-// 3D tilt effect on mouse move
 const card = document.querySelector('.glass-card');
 document.addEventListener('mousemove', (e) => {
     const rect = card.getBoundingClientRect();
@@ -417,6 +365,17 @@ document.addEventListener('mouseleave', () => {
 """
 
 
+def detect_roadmap(text):
+    text_lower = text.lower()
+    if any(k in text_lower for k in ["ai engineer", "artificial intelligence", "machine learning engineer"]):
+        return "ai engineer"
+    elif any(k in text_lower for k in ["data science", "data scientist"]):
+        return "data science"
+    elif any(k in text_lower for k in ["placement", "campus placement"]):
+        return "placement"
+    return None
+
+
 def get_css(dark_mode):
     if dark_mode:
         bg            = "#0a0f1e"
@@ -428,10 +387,9 @@ def get_css(dark_mode):
         btn_hover     = "#0f3d2a"
         border        = "#1a3a2a"
         btn_text      = "#00c896"
-        bottom_bg     = "#0d1b2a"
         bubble_bot    = "#0d2a1e"
         bubble_border = "#00916e33"
-        input_bg      = "#061510"
+        input_bg      = "#0d1b2a"
     else:
         bg            = "#f0faf6"
         card_bg       = "#ffffff"
@@ -442,7 +400,6 @@ def get_css(dark_mode):
         btn_hover     = "#007a5c"
         border        = "#80c8b0"
         btn_text      = "#ffffff"
-        bottom_bg     = "#d0ede5"
         bubble_bot    = "#ffffff"
         bubble_border = "#80c8b0"
         input_bg      = "#ffffff"
@@ -488,25 +445,6 @@ def get_css(dark_mode):
         color: {text} !important;
     }}
     .stApp {{ background-color: {bg} !important; }}
-
-    section[data-testid="stBottom"] {{
-        background-color: {bottom_bg} !important;
-        border-top: 1px solid {border} !important;
-        padding: 10px 16px !important;
-    }}
-    section[data-testid="stBottom"] > div {{
-        background-color: {bottom_bg} !important;
-    }}
-    div[data-testid="stChatInput"] {{
-        background-color: {input_bg} !important;
-        border: 1.5px solid #00916e55 !important;
-        border-radius: 30px !important;
-    }}
-    div[data-testid="stChatInput"] textarea {{
-        background-color: {input_bg} !important;
-        color: {text} !important;
-        font-size: 0.9rem !important;
-    }}
 
     .app-header {{
         background: linear-gradient(135deg, #00916e, #1a73e8);
@@ -622,7 +560,6 @@ def get_css(dark_mode):
     }}
     [data-testid="stSidebar"] * {{ color: {text} !important; }}
 
-    /* ── Creative chat bubbles ── */
     .stChatMessage {{
         background-color: {bubble_bot} !important;
         border: 1px solid {bubble_border} !important;
@@ -637,23 +574,17 @@ def get_css(dark_mode):
         transform: translateY(-2px) !important;
         box-shadow: 0 8px 24px rgba(0,145,110,0.15) !important;
     }}
-
-    /* User message bubble */
     .stChatMessage[data-testid="stChatMessageUser"] {{
         background: linear-gradient(135deg, #00916e22, #1a73e822) !important;
         border: 1px solid #00916e44 !important;
         border-radius: 20px 20px 4px 20px !important;
     }}
-
-    /* Bot message bubble */
     .stChatMessage[data-testid="stChatMessageAssistant"] {{
         background-color: {bubble_bot} !important;
         border: 1px solid {bubble_border} !important;
         border-radius: 20px 20px 20px 4px !important;
         border-left: 3px solid #00916e !important;
     }}
-
-    /* Markdown inside chat */
     .stChatMessage h2 {{
         color: {primary} !important;
         font-size: 1rem !important;
@@ -679,8 +610,12 @@ def get_css(dark_mode):
         margin-bottom: 6px !important;
         padding-left: 4px !important;
     }}
-    .stChatMessage ul li::marker {{
-        color: {primary} !important;
+    .stChatMessage ul li::marker {{ color: {primary} !important; }}
+    .stChatMessage ol li {{
+        color: {text} !important;
+        font-size: 0.9rem !important;
+        line-height: 1.7 !important;
+        margin-bottom: 6px !important;
     }}
     .stChatMessage p {{
         color: {text} !important;
@@ -688,10 +623,7 @@ def get_css(dark_mode):
         line-height: 1.7 !important;
         margin-bottom: 8px !important;
     }}
-    .stChatMessage strong {{
-        color: {primary} !important;
-        font-weight: 700 !important;
-    }}
+    .stChatMessage strong {{ color: {primary} !important; font-weight: 700 !important; }}
     .stChatMessage code {{
         background: {card_bg} !important;
         border: 1px solid {border} !important;
@@ -699,12 +631,6 @@ def get_css(dark_mode):
         padding: 2px 8px !important;
         font-size: 0.85rem !important;
         color: #00c896 !important;
-    }}
-
-    /* Chat avatar */
-    .stChatMessage .stAvatar {{
-        background: linear-gradient(135deg, #00916e, #1a73e8) !important;
-        border-radius: 50% !important;
     }}
 
     .stTextInput > div > div > input {{
@@ -750,11 +676,10 @@ if "name_entered" not in st.session_state:
 st.markdown(get_css(st.session_state.dark_mode), unsafe_allow_html=True)
 
 # ══════════════════════════════════════════════════════════
-# NAME ENTRY SCREEN — 3D LIQUID GLASS
+# NAME ENTRY SCREEN
 # ══════════════════════════════════════════════════════════
 if not st.session_state.name_entered:
     st.components.v1.html(WELCOME_HTML, height=520)
-
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
         name_input = st.text_input(

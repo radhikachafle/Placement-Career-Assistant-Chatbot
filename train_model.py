@@ -1,37 +1,64 @@
-import os
-import sys
+import json
 import pickle
+import random
 import numpy as np
+import nltk
+from nltk.stem import WordNetLemmatizer
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+nltk.download('punkt', quiet=True)
+nltk.download('punkt_tab', quiet=True)
+nltk.download('wordnet', quiet=True)
 
-from training.preprocess import preprocess
-from sklearn.neural_network import MLPClassifier
-
-os.makedirs("model", exist_ok=True)
-
-
-def train():
-    print("Starting ANN training...")
-
-    X_train, y_train, words, classes = preprocess()
-
-    y_labels = np.argmax(y_train, axis=1)
-
-    model = MLPClassifier(
-        hidden_layer_sizes=(128, 64),
-        activation='relu',
-        solver='adam',
-        max_iter=500,
-        random_state=42,
-        verbose=True
-    )
-
-    model.fit(X_train, y_labels)
-
-    pickle.dump(model, open('model/chatbot_model.pkl', 'wb'))
-    print("Training complete! Model saved to model/chatbot_model.pkl")
+lemmatizer = WordNetLemmatizer()
 
 
-if __name__ == "__main__":
-    train()
+def preprocess(intents_path="data/intents.json"):
+    with open(intents_path, encoding='utf-8') as f:
+        data = json.load(f)
+
+    words = []
+    classes = []
+    documents = []
+    ignore_chars = ['?', '!', '.', ',', "'", '"']
+
+    for intent in data['intents']:
+        for pattern in intent['patterns']:
+            token_list = nltk.word_tokenize(pattern)
+            words.extend(token_list)
+            documents.append((token_list, intent['tag']))
+        if intent['tag'] not in classes:
+            classes.append(intent['tag'])
+
+    words = sorted(set([
+        lemmatizer.lemmatize(w.lower())
+        for w in words
+        if w not in ignore_chars
+    ]))
+    classes = sorted(set(classes))
+
+    print(f"Vocabulary size  : {len(words)}")
+    print(f"Intent classes   : {len(classes)}")
+    print(f"Training docs    : {len(documents)}")
+
+    pickle.dump(words, open('model/words.pkl', 'wb'))
+    pickle.dump(classes, open('model/classes.pkl', 'wb'))
+
+    training = []
+    output_empty = [0] * len(classes)
+
+    for doc in documents:
+        bag = []
+        word_patterns = [lemmatizer.lemmatize(w.lower()) for w in doc[0]]
+        for w in words:
+            bag.append(1 if w in word_patterns else 0)
+        output_row = list(output_empty)
+        output_row[classes.index(doc[1])] = 1
+        training.append([bag, output_row])
+
+    random.shuffle(training)
+    training = np.array(training, dtype=object)
+
+    X_train = np.array(list(training[:, 0]))
+    y_train = np.array(list(training[:, 1]))
+
+    return X_train, y_train, words, classes

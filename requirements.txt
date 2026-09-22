@@ -1,4 +1,4 @@
-groq==0.9.0
+google-generativeai
 python-dotenv==1.0.0
 streamlit==1.32.0
 nltk==3.8.1
